@@ -1,0 +1,26 @@
+# Development files
+*.test.ts
+*.test.tsx
+tests/
+examples/
+.github/
+vitest.config.ts
+tsconfig.json
+
+# Build artifacts (not needed in package)
+.next/
+回档备份/
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Git files
+.git/
+.gitignore
+
+# Documentation (only README.md is needed, already in files)
+CONTRIBUTING.md
+CHANGELOG.md
+demo.gif
