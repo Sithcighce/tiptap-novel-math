@@ -62,7 +62,7 @@ export const MathNodeView = ({ node, updateAttributes, deleteNode, editor }: Nod
   const isSelected = editor.isActive("math");
 
   return (
-    <NodeViewWrapper className={cn("inline-block", displayMode && "w-full text-center")}>
+    <NodeViewWrapper as="span" className={cn("inline-block", displayMode && "w-full text-center")}>
       <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger asChild>
           <span

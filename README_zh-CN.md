@@ -20,6 +20,10 @@
 - 🔄 **块/行内切换**：轻松切换显示模式。
 - 🎨 **零样式绑定**：使用标准的 Tailwind 类和无样式原语 (Radix UI)，最大程度支持自定义。
 
+<p align="center">
+  <img src="./demo.gif" alt="Demo Preview" />
+</p>
+
 ## 📦 安装
 
 ```bash

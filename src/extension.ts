@@ -57,15 +57,21 @@ export const Mathematics = Node.create<MathematicsOptions>({
   addInputRules() {
     return [
       new InputRule({
-        find: /\$\$((?:.|[\r\n])*?)\$\$/, // Corrected: \r\n to \n
+        find: /\$\$((?:.|[\r\n])*?)\$\$/,
         handler: ({ state, range, match, chain }) => {
           const { from, to } = range;
           const latex = match[1].trim();
           if (latex) {
             chain()
               .focus()
-              .deleteRange(range)
-              .setLatex({ latex, displayMode: true })
+              .insertContentAt(
+                { from, to },
+                {
+                  type: "math",
+                  attrs: { latex, displayMode: true },
+                }
+              )
+              .setTextSelection(from + 1)
               .run();
           }
         },
@@ -91,8 +97,14 @@ export const Mathematics = Node.create<MathematicsOptions>({
           if (latex) {
             chain()
               .focus()
-              .deleteRange(range)
-              .setLatex({ latex, displayMode: false })
+              .insertContentAt(
+                { from, to },
+                {
+                  type: "math",
+                  attrs: { latex, displayMode: false },
+                }
+              )
+              .setTextSelection(from + 1)
               .run();
           }
         },

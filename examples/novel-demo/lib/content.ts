@@ -97,8 +97,13 @@ export const defaultContent: JSONContent = {
       ],
     },
     {
-      type: "math",
-      attrs: { latex: "\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}", displayMode: true },
+      type: "paragraph",
+      content: [
+        {
+          type: "math",
+          attrs: { latex: "\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}", displayMode: true },
+        }
+      ]
     },
     {
       type: "paragraph",
@@ -107,8 +112,13 @@ export const defaultContent: JSONContent = {
       ],
     },
     {
-      type: "math",
-      attrs: { latex: "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", displayMode: true },
+      type: "paragraph",
+      content: [
+        {
+          type: "math",
+          attrs: { latex: "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}", displayMode: true },
+        }
+      ]
     },
     {
       type: "heading",

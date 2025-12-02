@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
+    "test": "vitest",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -46,17 +47,21 @@
   },
   "dependencies": {
     "@radix-ui/react-popover": "^1.0.7",
+    "clsx": "^2.0.0",
     "katex": "^0.16.9",
     "lucide-react": "^0.292.0",
-    "clsx": "^2.0.0",
     "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.0",
     "@types/katex": "^0.16.7",
     "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "jsdom": "^27.2.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.14"
   }
 }

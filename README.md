@@ -20,6 +20,10 @@ This extension provides a seamless "Click to Edit" experience for LaTeX math for
 - 🔄 **Block/Inline Toggle**: Easily switch between display modes.
 - 🎨 **Zero Styles**: Uses standard Tailwind classes and unstyled primitives (Radix UI) for maximum customizability.
 
+<p align="center">
+  <img src="./demo.gif" alt="Demo Preview" />
+</p>
+
 ## Installation
 
 ```bash
