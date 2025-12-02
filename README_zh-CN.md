@@ -8,6 +8,8 @@
 
 一个适用于 [Tiptap](https://tiptap.dev) 和 [Novel](https://novel.sh) 的 Notion 风格交互式数学公式扩展。
 
+🎮 **[在线演示](https://sithcighce.github.io/tiptap-novel-math/)**
+
 本扩展为 LaTeX 数学公式提供了无缝的“点击即编辑”体验，支持行内 (`$E=mc^2$`) 和块级 (`$$...$$`) 公式。
 
 ## ✨ 特性

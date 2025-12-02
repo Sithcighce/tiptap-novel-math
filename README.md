@@ -8,6 +8,8 @@
 
 A Notion-like, interactive mathematical formula extension for [Tiptap](https://tiptap.dev) and [Novel](https://novel.sh).
 
+🎮 **[Live Demo](https://sithcighce.github.io/tiptap-novel-math/)**
+
 This extension provides a seamless "Click to Edit" experience for LaTeX math formulas, supporting both inline (`$E=mc^2$`) and block (`$$...$$`) equations.
 
 ## Features
