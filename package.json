@@ -1,0 +1,62 @@
+{
+  "name": "tiptap-novel-math",
+  "version": "0.1.0",
+  "description": "A Notion-like interactive math formula extension for Tiptap/Novel editor.",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "workspaces": [
+    "examples/*"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "tiptap",
+    "extension",
+    "math",
+    "latex",
+    "katex",
+    "novel",
+    "editor"
+  ],
+  "author": "Sithcighce",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sithcighce/tiptap-novel-math.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sithcighce/tiptap-novel-math/issues"
+  },
+  "homepage": "https://github.com/Sithcighce/tiptap-novel-math#readme",
+  "peerDependencies": {
+    "@tiptap/core": "^2.0.0",
+    "@tiptap/react": "^2.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-popover": "^1.0.7",
+    "katex": "^0.16.9",
+    "lucide-react": "^0.292.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/katex": "^0.16.7",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}

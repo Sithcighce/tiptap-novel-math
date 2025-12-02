@@ -1,0 +1,150 @@
+/* ProseMirror Styles */
+
+.ProseMirror {
+  @apply p-12 px-8 sm:px-12;
+}
+
+.ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+/* Heading Styles */
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  @apply font-bold;
+}
+
+.ProseMirror h1 {
+  @apply text-4xl mt-8 mb-4;
+}
+
+.ProseMirror h2 {
+  @apply text-3xl mt-6 mb-3;
+}
+
+.ProseMirror h3 {
+  @apply text-2xl mt-4 mb-2;
+}
+
+/* Link Styles */
+.ProseMirror a {
+  @apply text-blue-500 underline cursor-pointer;
+}
+
+/* List Styles */
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply pl-6 my-4;
+}
+
+.ProseMirror ul {
+  @apply list-disc;
+}
+
+.ProseMirror ol {
+  @apply list-decimal;
+}
+
+/* Code Block */
+.ProseMirror pre {
+  @apply bg-muted text-muted-foreground rounded-lg p-4 my-4 overflow-x-auto;
+}
+
+.ProseMirror code {
+  @apply bg-muted text-muted-foreground rounded px-1.5 py-0.5 font-mono text-sm;
+}
+
+/* Blockquote */
+.ProseMirror blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-4;
+}
+
+/* Task List */
+.ProseMirror ul[data-type="taskList"] {
+  @apply list-none pl-0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  @apply flex items-start gap-2 my-2;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label {
+  @apply flex-shrink-0 mt-1;
+}
+
+.ProseMirror ul[data-type="taskList"] li > div {
+  @apply flex-1;
+}
+
+/* Horizontal Rule */
+.ProseMirror hr {
+  @apply border-t border-border my-6;
+}
+
+/* Image */
+.ProseMirror img {
+  @apply rounded-lg max-w-full h-auto;
+}
+
+/* Selection */
+.ProseMirror .ProseMirror-selectednode {
+  @apply outline outline-2 outline-blue-500 outline-offset-2;
+}
+
+/* Placeholder for empty nodes */
+.ProseMirror p.is-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Drag Handle */
+.ProseMirror .drag-handle {
+  @apply cursor-grab;
+}
+
+/* Math/KaTeX Styles are imported separately */
+
+/* AI Highlight */
+.ProseMirror mark {
+  @apply bg-yellow-200 dark:bg-yellow-900 rounded px-1;
+}
+
+/* YouTube Embed */
+.ProseMirror iframe {
+  @apply w-full aspect-video rounded-lg my-4;
+}
+
+/* Focus Styles */
+.ProseMirror:focus {
+  @apply outline-none;
+}
+
+/* Table styles (if needed) */
+.ProseMirror table {
+  @apply border-collapse w-full my-4;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  @apply border border-border px-4 py-2;
+}
+
+.ProseMirror th {
+  @apply bg-muted font-semibold;
+}
