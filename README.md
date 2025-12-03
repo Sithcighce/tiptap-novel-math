@@ -8,6 +8,10 @@
 
 A Notion-like, interactive mathematical formula extension for [Tiptap](https://tiptap.dev) and [Novel](https://novel.sh).
 
+<p align="center">
+  <img src="./demo.gif" alt="Demo Preview" />
+</p>
+
 🎮 **[Live Demo](https://sithcighce.github.io/tiptap-novel-math/)**
 
 This extension provides a seamless "Click to Edit" experience for LaTeX math formulas, supporting both inline (`$E=mc^2$`) and block (`$$...$$`) equations.
@@ -21,10 +25,6 @@ This extension provides a seamless "Click to Edit" experience for LaTeX math for
 - 📋 **Smart Paste**: Automatically detects LaTeX patterns in pasted text and converts them to math nodes.
 - 🔄 **Block/Inline Toggle**: Easily switch between display modes.
 - 🎨 **Zero Styles**: Uses standard Tailwind classes and unstyled primitives (Radix UI) for maximum customizability.
-
-<p align="center">
-  <img src="./demo.gif" alt="Demo Preview" />
-</p>
 
 ## Installation
 
