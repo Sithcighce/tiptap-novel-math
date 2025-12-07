@@ -1,6 +1,6 @@
 {
   "name": "tiptap-novel-math",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Notion-like interactive math formula extension for Tiptap/Novel editor.",
   "files": [
     "dist",
@@ -42,8 +42,8 @@
   "peerDependencies": {
     "@tiptap/core": "^2.0.0",
     "@tiptap/react": "^2.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
     "@radix-ui/react-popover": "^1.0.7",
