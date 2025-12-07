@@ -36,10 +36,35 @@ npm install @tiptap/core @tiptap/react react react-dom
 
 ## Styles
 
-You need to import KaTeX CSS in your app's root (e.g., `layout.tsx` or `App.tsx`):
+### With Tailwind CSS (recommended)
+
+If your project uses Tailwind CSS, you just need to import KaTeX CSS:
+
+```tsx
+import "katex/dist/katex.min.css";
+```
+
+### Without Tailwind CSS
+
+If your project does NOT use Tailwind CSS, you need to import our fallback styles as well:
+
+```tsx
+import "katex/dist/katex.min.css";
+import "tiptap-novel-math/styles.css";
+```
+
+### Customization
+
+You can customize the appearance by overriding CSS variables:
 
 ```css
-import "katex/dist/katex.min.css";
+:root {
+  --tnm-bg-hover: #f1f5f9;
+  --tnm-ring-color: #000000;
+  --tnm-popover-bg: #ffffff;
+  --tnm-btn-primary-bg: #0f172a;
+  /* See src/styles.css for all available variables */
+}
 ```
 
 ## Usage

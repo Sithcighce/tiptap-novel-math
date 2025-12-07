@@ -1,0 +1,232 @@
+/**
+ * tiptap-novel-math 默认样式
+ * 
+ * 如果你的项目没有使用 Tailwind CSS，可以导入这个文件：
+ * import "tiptap-novel-math/dist/styles.css";
+ * 
+ * 或者在你的 CSS 中覆盖这些 CSS 变量来自定义样式。
+ */
+
+/* CSS 变量 - 可在你的项目中覆盖 */
+:root {
+  --tnm-bg-hover: #f1f5f9;
+  --tnm-bg-empty: #f1f5f9;
+  --tnm-text-empty: #64748b;
+  --tnm-ring-color: #000000;
+  --tnm-popover-bg: #ffffff;
+  --tnm-popover-border: #e2e8f0;
+  --tnm-input-border: #e2e8f0;
+  --tnm-input-ring: #0f172a;
+  --tnm-text-muted: #64748b;
+  --tnm-btn-primary-bg: #0f172a;
+  --tnm-btn-primary-text: #f8fafc;
+  --tnm-btn-danger: #ef4444;
+  --tnm-btn-danger-hover: #dc2626;
+}
+
+/* 深色模式变量 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tnm-bg-hover: #1e293b;
+    --tnm-bg-empty: #1e293b;
+    --tnm-text-empty: #94a3b8;
+    --tnm-ring-color: #ffffff;
+    --tnm-popover-bg: #020617;
+    --tnm-popover-border: #1e293b;
+    --tnm-input-border: #1e293b;
+    --tnm-input-ring: #cbd5e1;
+    --tnm-text-muted: #94a3b8;
+    --tnm-btn-primary-bg: #f8fafc;
+    --tnm-btn-primary-text: #0f172a;
+  }
+}
+
+/* 也支持 .dark 类选择器 (Tailwind dark mode) */
+.dark {
+  --tnm-bg-hover: #1e293b;
+  --tnm-bg-empty: #1e293b;
+  --tnm-text-empty: #94a3b8;
+  --tnm-ring-color: #ffffff;
+  --tnm-popover-bg: #020617;
+  --tnm-popover-border: #1e293b;
+  --tnm-input-border: #1e293b;
+  --tnm-input-ring: #cbd5e1;
+  --tnm-text-muted: #94a3b8;
+  --tnm-btn-primary-bg: #f8fafc;
+  --tnm-btn-primary-text: #0f172a;
+}
+
+/* Math Node Wrapper */
+.tnm-math-wrapper {
+  display: inline-block;
+}
+
+.tnm-math-wrapper--block {
+  width: 100%;
+  text-align: center;
+}
+
+/* Math Trigger */
+.tnm-math-trigger {
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease;
+}
+
+.tnm-math-trigger:hover {
+  background-color: var(--tnm-bg-hover);
+}
+
+.tnm-math-trigger--empty {
+  background-color: var(--tnm-bg-empty);
+  color: var(--tnm-text-empty);
+  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tnm-math-trigger--selected {
+  box-shadow: 0 0 0 2px var(--tnm-ring-color);
+  outline-offset: 1px;
+}
+
+/* Popover */
+.tnm-popover {
+  z-index: 50;
+  width: 20rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--tnm-popover-border);
+  background-color: var(--tnm-popover-bg);
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.tnm-popover-title {
+  font-weight: 500;
+  line-height: 1;
+  margin: 0;
+}
+
+.tnm-popover-subtitle {
+  font-size: 0.75rem;
+  color: var(--tnm-text-muted);
+  margin: 0.5rem 0 0 0;
+}
+
+/* Textarea */
+.tnm-textarea {
+  display: flex;
+  min-height: 5rem;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--tnm-input-border);
+  background-color: transparent;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  resize: vertical;
+}
+
+.tnm-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--tnm-input-ring);
+}
+
+.tnm-textarea::placeholder {
+  color: var(--tnm-text-muted);
+}
+
+/* Checkbox */
+.tnm-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tnm-checkbox {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0.25rem;
+}
+
+.tnm-checkbox-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Buttons */
+.tnm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.tnm-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--tnm-input-ring);
+}
+
+.tnm-btn--icon {
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+}
+
+.tnm-btn--primary {
+  background-color: var(--tnm-btn-primary-bg);
+  color: var(--tnm-btn-primary-text);
+}
+
+.tnm-btn--primary:hover {
+  opacity: 0.9;
+}
+
+.tnm-btn--ghost {
+  background-color: transparent;
+  color: var(--tnm-btn-danger);
+}
+
+.tnm-btn--ghost:hover {
+  background-color: var(--tnm-bg-hover);
+  color: var(--tnm-btn-danger-hover);
+}
+
+/* Layout helpers */
+.tnm-space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+
+.tnm-space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.tnm-flex {
+  display: flex;
+}
+
+.tnm-items-center {
+  align-items: center;
+}
+
+.tnm-justify-between {
+  justify-content: space-between;
+}
+
+.tnm-gap-1 {
+  gap: 0.25rem;
+}
+
+/* Icon sizing */
+.tnm-icon {
+  height: 1rem;
+  width: 1rem;
+}

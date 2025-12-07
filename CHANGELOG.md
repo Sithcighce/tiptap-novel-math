@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.3] - 2025-12-07
+### Added
+- New `styles.css` export for projects without Tailwind CSS
+- CSS variables for theme customization (see README for details)
+- Comprehensive test suite for KaTeX rendering behavior
+- Test to verify CSS import is present in source code
+
+### Changed
+- Documentation updated with clearer styling instructions
+- Moved `lucide-react` from dependencies to peerDependencies (optional) to avoid version conflicts
+
 ## [0.1.2] - 2025-12-07
 ### Changed
 - **Compatibility**: Extended `peerDependencies` to support React 19 (`^18.0.0 || ^19.0.0`)
