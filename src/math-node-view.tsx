@@ -4,6 +4,7 @@ import { NodeViewWrapper } from "@tiptap/react";
 import { NodeViewProps } from "@tiptap/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import katex from "katex";
+import "katex/dist/katex.min.css"; // 关键：确保 KaTeX 样式被加载，否则 .katex-mathml 不会被隐藏
 import * as Popover from "@radix-ui/react-popover";
 import { Check, Trash2, Sigma } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";

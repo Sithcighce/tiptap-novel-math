@@ -180,13 +180,12 @@ export const Mathematics = Node.create<MathematicsOptions>({
   },
 
   renderHTML({ node, HTMLAttributes }) {
-    const latex = node.attrs["latex"] ?? "";
     return [
       "span",
       mergeAttributes(HTMLAttributes, {
         "data-type": this.name,
+        "data-latex": node.attrs.latex,
       }),
-      latex,
     ];
   },
 

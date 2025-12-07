@@ -1,6 +1,6 @@
 {
   "name": "tiptap-novel-math",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Notion-like interactive math formula extension for Tiptap/Novel editor.",
   "files": [
     "dist",
