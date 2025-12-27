@@ -23,6 +23,8 @@ This extension provides a seamless "Click to Edit" experience for LaTeX math for
   - Type `$$` + `Space` to insert a block equation.
   - Type `$E=mc^2$` to automatically convert to an inline equation.
 - 📋 **Smart Paste**: Automatically detects LaTeX patterns in pasted text and converts them to math nodes.
+- 🤖 **AI Paste Support**: Robustly handles content pasted from LLMs (ChatGPT, DeepSeek), normalizing `\(...\)` and `\[...\]` formats automatically.
+- 📝 **Markdown Serialization**: Seamlessly integrates with `tiptap-markdown` to export formulas as standard LaTeX (`$E=mc^2$`).
 - 🔄 **Block/Inline Toggle**: Easily switch between display modes.
 - 🎨 **Zero Styles**: Uses standard Tailwind classes and unstyled primitives (Radix UI) for maximum customizability.
 
@@ -82,7 +84,7 @@ const Editor = () => {
     extensions: [
       StarterKit,
       Mathematics, // The main extension
-      MarkdownLatexParser, // Optional: for pasting support
+      MarkdownLatexParser, // Optional: legacy support for complex paste scenarios
     ],
     content: "<p>Type $E=mc^2$ to see magic!</p>",
   });
