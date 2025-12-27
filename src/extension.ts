@@ -136,7 +136,7 @@ export const Mathematics = Node.create<MathematicsOptions>({
       new PasteRule({
         find: /\\\[((?:.|[\r\n])*?)\\\]/g,
         handler: ({ state, range, match, chain }) => {
-          const latex = match[1].trim();
+          const latex = match[1].trim().replace(/[\uFFFC\u200B]/g, "");
           if (latex) {
             chain()
               .focus()
@@ -154,7 +154,7 @@ export const Mathematics = Node.create<MathematicsOptions>({
       new PasteRule({
         find: /\$\$((?:.|[\r\n])*?)\$\$/g,
         handler: ({ state, range, match, chain }) => {
-          const latex = match[1].trim();
+          const latex = match[1].trim().replace(/[\uFFFC\u200B]/g, "");
           if (latex) {
             chain()
               .focus()
@@ -172,7 +172,7 @@ export const Mathematics = Node.create<MathematicsOptions>({
       new PasteRule({
         find: /\\\(((?:.|[\r\n])*?)\\\)/g,
         handler: ({ state, range, match, chain }) => {
-          const latex = match[1].trim();
+          const latex = match[1].trim().replace(/[\uFFFC\u200B]/g, "");
           if (latex) {
             chain()
               .focus()
@@ -190,7 +190,7 @@ export const Mathematics = Node.create<MathematicsOptions>({
       new PasteRule({
         find: /\$([^$\n]+?)\$/g,
         handler: ({ state, range, match, chain }) => {
-          const latex = match[1].trim();
+          const latex = match[1].trim().replace(/[\uFFFC\u200B]/g, "");
           if (latex) {
             chain()
               .focus()
@@ -213,9 +213,22 @@ export const Mathematics = Node.create<MathematicsOptions>({
       new Plugin({
         props: {
           transformPastedText(text) {
+            // Clean invisible characters that break KaTeX
+            text = text.replace(/[\uFFFC\u200B]/g, "");
+            
             text = text.replace(/\\\[((?:.|[\r\n])*?)\\\]/g, "$$$$$1$$$$");
             text = text.replace(/\\\(((?:.|[\r\n])*?)\\\)/g, "$$$1$$");
             return text;
+          },
+          transformPastedHTML(html) {
+            // Clean invisible characters that break KaTeX
+            html = html.replace(/[\uFFFC\u200B]/g, "");
+            
+            // Replace in HTML content. 
+            // Warning: This is a naive replacement. It might affect attributes, but for GPT paste it's usually fine.
+            html = html.replace(/\\\[((?:.|[\r\n])*?)\\\]/g, "$$$$$1$$$$");
+            html = html.replace(/\\\(((?:.|[\r\n])*?)\\\)/g, "$$$1$$");
+            return html;
           },
         },
       }),
