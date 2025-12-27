@@ -49,4 +49,41 @@ describe("Markdown Latex Parser (Paste)", () => {
     expect(mathNode?.attrs?.latex).toBe("\\sum_{i=1}^n i");
     expect(mathNode?.attrs?.displayMode).toBe(true);
   });
+
+  it("should convert pasted inline latex \\(...\\) to math node", () => {
+    const editor = createEditor();
+    
+    editor.view.dispatch(
+      editor.state.tr
+        .insertText("Inline: \\( a^2 + b^2 = c^2 \\)")
+        .setMeta("paste", true)
+    );
+
+    const json = editor.getJSON();
+    const content = json.content?.[0]?.content;
+    
+    expect(content).toHaveLength(2);
+    expect(content?.[0].text).toBe("Inline: ");
+    expect(content?.[1].type).toBe("math");
+    expect(content?.[1].attrs?.latex).toBe("a^2 + b^2 = c^2");
+    expect(content?.[1].attrs?.displayMode).toBe(false);
+  });
+
+  it("should convert pasted block latex \\[...\\] to math node", () => {
+    const editor = createEditor();
+    
+    editor.view.dispatch(
+      editor.state.tr
+        .insertText("Block: \\[ E = mc^2 \\]")
+        .setMeta("paste", true)
+    );
+
+    const json = editor.getJSON();
+    const content = json.content?.[0]?.content;
+    
+    const mathNode = content?.[1];
+    expect(mathNode?.type).toBe("math");
+    expect(mathNode?.attrs?.latex).toBe("E = mc^2");
+    expect(mathNode?.attrs?.displayMode).toBe(true);
+  });
 });

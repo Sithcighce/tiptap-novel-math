@@ -39,8 +39,12 @@ export const MarkdownLatexParser = Extension.create({
             }
 
             const text = node.text;
-            // Regex to match $$...$$ (block) or $...$ (inline)
-            const latexRegex = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$/g;
+            // Regex to match:
+            // 1. \[ ... \] (Block)
+            // 2. $$ ... $$ (Block)
+            // 3. \( ... \) (Inline)
+            // 4. $ ... $   (Inline)
+            const latexRegex = /\\\[((?:.|[\r\n])*?)\\\]|\$\$([\s\S]+?)\$\$|\\\(((?:.|[\r\n])*?)\\\)|\$([^$\n]+?)\$/g;
             
             if (!latexRegex.test(text)) {
               return;
@@ -60,8 +64,12 @@ export const MarkdownLatexParser = Extension.create({
               }
 
               // Add math node
-              const latex = (match[1] ?? match[2] ?? "").trim();
-              const displayMode = !!match[1]; // Group 1 is for $$...$$
+              // match[1] -> \[ ... \]
+              // match[2] -> $$ ... $$
+              // match[3] -> \( ... \)
+              // match[4] -> $ ... $
+              const latex = (match[1] || match[2] || match[3] || match[4] || "").trim();
+              const displayMode = !!(match[1] || match[2]);
               
               if (latex) {
                 const mathNode = newState.schema.nodes.math?.create({ latex, displayMode });
