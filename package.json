@@ -43,6 +43,10 @@
     "type": "git",
     "url": "git+https://github.com/Sithcighce/tiptap-novel-math.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "bugs": {
     "url": "https://github.com/Sithcighce/tiptap-novel-math/issues"
   },

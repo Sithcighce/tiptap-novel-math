@@ -35,6 +35,6 @@ jobs:
         continue-on-error: true  # 测试失败不阻止发布（可选）
 
       - name: Publish to NPM
-        run: npm publish --provenance --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
