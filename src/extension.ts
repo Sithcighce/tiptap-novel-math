@@ -1,5 +1,5 @@
 import { Node, mergeAttributes, InputRule, PasteRule, Editor, ChainedCommands } from "@tiptap/core";
-import type { EditorState, Transaction } from "@tiptap/pm/state";
+import { Plugin, type EditorState, type Transaction } from "@tiptap/pm/state";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import type { KatexOptions } from "katex";
 import { MathNodeView } from "./math-node-view";
@@ -203,6 +203,20 @@ export const Mathematics = Node.create<MathematicsOptions>({
               )
               .run();
           }
+        },
+      }),
+    ];
+  },
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        props: {
+          transformPastedText(text) {
+            text = text.replace(/\\\[((?:.|[\r\n])*?)\\\]/g, "$$$$$1$$$$");
+            text = text.replace(/\\\(((?:.|[\r\n])*?)\\\)/g, "$$$1$$");
+            return text;
+          },
         },
       }),
     ];
