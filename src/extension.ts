@@ -38,6 +38,25 @@ export const Mathematics = Node.create<MathematicsOptions>({
     };
   },
 
+  addStorage() {
+    return {
+      markdown: {
+        serialize: {
+          math: (state: any, node: any) => {
+            const latex = node.attrs.latex || "";
+            const displayMode = node.attrs.displayMode;
+
+            if (displayMode) {
+              state.write(`$$${latex}$$`);
+            } else {
+              state.write(`$${latex}$`);
+            }
+          },
+        },
+      },
+    };
+  },
+
   addOptions() {
     return {
       shouldRender: (state, pos) => {
