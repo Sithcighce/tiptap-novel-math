@@ -1,4 +1,4 @@
-import { Node, mergeAttributes, InputRule, Editor, ChainedCommands } from "@tiptap/core";
+import { Node, mergeAttributes, InputRule, PasteRule, Editor, ChainedCommands } from "@tiptap/core";
 import type { EditorState, Transaction } from "@tiptap/pm/state";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import type { KatexOptions } from "katex";
@@ -124,6 +124,83 @@ export const Mathematics = Node.create<MathematicsOptions>({
                 }
               )
               .setTextSelection(from + 1)
+              .run();
+          }
+        },
+      }),
+    ];
+  },
+
+  addPasteRules() {
+    return [
+      new PasteRule({
+        find: /\\\[((?:.|[\r\n])*?)\\\]/g,
+        handler: ({ state, range, match, chain }) => {
+          const latex = match[1].trim();
+          if (latex) {
+            chain()
+              .focus()
+              .insertContentAt(
+                { from: range.from, to: range.to },
+                {
+                  type: this.name,
+                  attrs: { latex, displayMode: true },
+                }
+              )
+              .run();
+          }
+        },
+      }),
+      new PasteRule({
+        find: /\$\$((?:.|[\r\n])*?)\$\$/g,
+        handler: ({ state, range, match, chain }) => {
+          const latex = match[1].trim();
+          if (latex) {
+            chain()
+              .focus()
+              .insertContentAt(
+                { from: range.from, to: range.to },
+                {
+                  type: this.name,
+                  attrs: { latex, displayMode: true },
+                }
+              )
+              .run();
+          }
+        },
+      }),
+      new PasteRule({
+        find: /\\\(((?:.|[\r\n])*?)\\\)/g,
+        handler: ({ state, range, match, chain }) => {
+          const latex = match[1].trim();
+          if (latex) {
+            chain()
+              .focus()
+              .insertContentAt(
+                { from: range.from, to: range.to },
+                {
+                  type: this.name,
+                  attrs: { latex, displayMode: false },
+                }
+              )
+              .run();
+          }
+        },
+      }),
+      new PasteRule({
+        find: /\$([^$\n]+?)\$/g,
+        handler: ({ state, range, match, chain }) => {
+          const latex = match[1].trim();
+          if (latex) {
+            chain()
+              .focus()
+              .insertContentAt(
+                { from: range.from, to: range.to },
+                {
+                  type: this.name,
+                  attrs: { latex, displayMode: false },
+                }
+              )
               .run();
           }
         },

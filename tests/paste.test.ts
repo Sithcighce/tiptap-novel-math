@@ -86,4 +86,27 @@ describe("Markdown Latex Parser (Paste)", () => {
     expect(mathNode?.attrs?.latex).toBe("E = mc^2");
     expect(mathNode?.attrs?.displayMode).toBe(true);
   });
+
+  it("should convert real-world text from 测试文本.md", () => {
+    const editor = createEditor();
+    const text = "对于 \\( n \\times n \\) 矩阵 \\( A \\)";
+    
+    editor.view.dispatch(
+      editor.state.tr
+        .insertText(text)
+        .setMeta("paste", true)
+    );
+
+    const json = editor.getJSON();
+    const content = json.content?.[0]?.content;
+    
+    // Expected: Text("对于 "), Math("n \times n"), Text(" 矩阵 "), Math("A")
+    expect(content).toHaveLength(4);
+    expect(content?.[0].text).toBe("对于 ");
+    expect(content?.[1].type).toBe("math");
+    expect(content?.[1].attrs?.latex).toBe("n \\times n");
+    expect(content?.[2].text).toBe(" 矩阵 ");
+    expect(content?.[3].type).toBe("math");
+    expect(content?.[3].attrs?.latex).toBe("A");
+  });
 });
