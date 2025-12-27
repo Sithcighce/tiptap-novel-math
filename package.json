@@ -23,11 +23,10 @@
     "./styles.css": "./src/styles.css"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts && cp src/styles.css dist/styles.css",
-    "build:win": "tsup src/index.ts --format cjs,esm --dts && copy src\\styles.css dist\\styles.css",
+    "build": "tsup src/index.ts --format cjs,esm --dts && node -e \"require('fs').copyFileSync('src/styles.css', 'dist/styles.css')\"",
     "lint": "tsc",
     "test": "vitest",
-    "prepublishOnly": "npm run build:win"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "tiptap",
