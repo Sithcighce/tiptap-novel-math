@@ -7,6 +7,7 @@ export default defineConfig({
     setupFiles: [],
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
     globals: true,
+    css: false, // 禁用 CSS 处理，避免在 Node 环境中报错
   },
   resolve: {
     alias: {

@@ -1,18 +1,26 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import { Mathematics, MarkdownLatexParser } from "../src/index";
 
-const createEditor = () => {
-  return new Editor({
-    extensions: [StarterKit, Mathematics, MarkdownLatexParser],
-    content: "<p></p>",
-  });
-};
-
 describe("Markdown Latex Parser (Paste)", () => {
+  let editor: Editor;
+
+  const createEditor = () => {
+    return new Editor({
+      extensions: [StarterKit, Mathematics, MarkdownLatexParser],
+      content: "<p></p>",
+    });
+  };
+
+  afterEach(() => {
+    if (editor) {
+      editor.destroy();
+    }
+  });
+
   it("should convert pasted inline latex $...$ to math node", () => {
-    const editor = createEditor();
+    editor = createEditor();
     
     // Simulate a paste transaction
     // We manually create a transaction that inserts text and marks it as 'paste'
@@ -33,7 +41,7 @@ describe("Markdown Latex Parser (Paste)", () => {
   });
 
   it("should convert pasted block latex $$...$$ to math node with displayMode", () => {
-    const editor = createEditor();
+    editor = createEditor();
     
     editor.view.dispatch(
       editor.state.tr
@@ -51,7 +59,7 @@ describe("Markdown Latex Parser (Paste)", () => {
   });
 
   it("should convert pasted inline latex \\(...\\) to math node", () => {
-    const editor = createEditor();
+    editor = createEditor();
     
     editor.view.dispatch(
       editor.state.tr
@@ -70,7 +78,7 @@ describe("Markdown Latex Parser (Paste)", () => {
   });
 
   it("should convert pasted block latex \\[...\\] to math node", () => {
-    const editor = createEditor();
+    editor = createEditor();
     
     editor.view.dispatch(
       editor.state.tr
@@ -88,7 +96,7 @@ describe("Markdown Latex Parser (Paste)", () => {
   });
 
   it("should convert real-world text from 测试文本.md", () => {
-    const editor = createEditor();
+    editor = createEditor();
     const text = "对于 \\( n \\times n \\) 矩阵 \\( A \\)";
     
     editor.view.dispatch(

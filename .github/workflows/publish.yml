@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write  # 关键：这是 OIDC 认证的核心权限
+      id-token: write
 
     steps:
       - name: Checkout
@@ -21,27 +21,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-          # 这一步 setup-node 会检测到 id-token 权限，准备好 OIDC 环境
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
 
-      - name: Build
-        run: npm run build
+      - name: Build Plugin
+        run: pnpm build
 
-      # ❌ 删除：Verify NPM Token (npm whoami)
-      # 原因：OIDC 认证是在运行 npm publish 的瞬间才进行“握手”的。
-      # 在这之前运行 whoami 通常会失败或者显示未登录，这步没必要。
-
-      - name: Run Tests
-        run: npm test
+      - name: Run Plugin Tests
+        run: pnpm test run
         continue-on-error: true
 
       - name: Publish to NPM
-        # ✅ 修改：添加 --provenance
-        # 这是 Trusted Publishing 必须的参数，用来证明包的来源
+        # No working-directory needed as this is the root in the open source repo
         run: npm publish --provenance --access public
-        # ❌ 删除：env: NODE_AUTH_TOKEN
-        # 原因：既然用了 OIDC，就不再需要手动传递 Secret 了，彻底告别 Token 过期！

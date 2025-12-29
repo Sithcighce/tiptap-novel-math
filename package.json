@@ -23,7 +23,7 @@
     "./styles.css": "./src/styles.css"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts && node -e \"require('fs').copyFileSync('src/styles.css', 'dist/styles.css')\"",
+    "build": "tsup src/index.ts --format cjs,esm && node -e \"require('fs').copyFileSync('src/styles.css', 'dist/styles.css')\"",
     "lint": "tsc",
     "test": "vitest",
     "prepublishOnly": "npm run build"
@@ -73,12 +73,14 @@
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
+    "@tiptap/core": "^2.27.1",
     "@tiptap/pm": "^2.0.0",
+    "@tiptap/starter-kit": "^2.27.1",
     "@types/katex": "^0.16.7",
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "jsdom": "^27.2.0",
+    "@types/node": "^20.19.27",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "jsdom": "^27.4.0",
     "lucide-react": "^0.562.0",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",

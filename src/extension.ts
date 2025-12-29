@@ -1,5 +1,5 @@
 import { Node, mergeAttributes, InputRule, PasteRule, Editor, ChainedCommands } from "@tiptap/core";
-import { Plugin, type EditorState, type Transaction } from "@tiptap/pm/state";
+import { Plugin, PluginKey, type EditorState, type Transaction } from "@tiptap/pm/state";
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import type { KatexOptions } from "katex";
 import { MathNodeView } from "./math-node-view";
@@ -40,7 +40,7 @@ export const Mathematics = Node.create<MathematicsOptions>({
 
   addStorage() {
     return {
-      markdown: {
+      mathMarkdown: {
         serialize: {
           math: (state: any, node: any) => {
             const latex = node.attrs.latex || "";
@@ -211,24 +211,78 @@ export const Mathematics = Node.create<MathematicsOptions>({
   addProseMirrorPlugins() {
     return [
       new Plugin({
+        key: new PluginKey("mathHydration"),
+        appendTransaction: (transactions, oldState, newState) => {
+           // This plugin handles paste operations and any missed hydration
+           // Initial hydration is handled by onCreate
+           
+           const tr = newState.tr;
+           let modified = false;
+           const replacements: { from: number; to: number; nodes: any[] }[] = [];
+           
+           newState.doc.descendants((node, pos, parent) => {
+             if (node.type.name !== "text" || !node.text) return;
+             if (parent && parent.type.name === "codeBlock") return;
+
+             const text = node.text;
+             // Create fresh regex to avoid lastIndex issues
+             const latexRegex = /\\\[((?:.|[\r\n])*?)\\\]|\$\$([\s\S]+?)\$\$|\\\(((?:.|[\r\n])*?)\\\)|\$([^$\n]+?)\$/g;
+             
+             const nodes: any[] = [];
+             let lastIndex = 0;
+             let hasMatch = false;
+             
+             let match;
+             while ((match = latexRegex.exec(text)) !== null) {
+               hasMatch = true;
+               if (match.index > lastIndex) {
+                 nodes.push(newState.schema.text(text.slice(lastIndex, match.index)));
+               }
+               
+               const latex = (match[1] || match[2] || match[3] || match[4] || "").trim();
+               const displayMode = !!(match[1] || match[2]);
+               
+               if (latex) {
+                  const mathNode = newState.schema.nodes.math?.create({ latex, displayMode });
+                  if (mathNode) nodes.push(mathNode);
+                  else nodes.push(newState.schema.text(match[0]));
+               }
+               
+               lastIndex = latexRegex.lastIndex;
+             }
+             
+             if (!hasMatch) return;
+             
+             if (lastIndex < text.length) {
+               nodes.push(newState.schema.text(text.slice(lastIndex)));
+             }
+             
+             if (nodes.length > 0) {
+               replacements.push({ from: pos, to: pos + node.nodeSize, nodes });
+             }
+           });
+           
+           if (replacements.length > 0) {
+             for (let i = replacements.length - 1; i >= 0; i--) {
+               const { from, to, nodes } = replacements[i];
+               tr.replaceWith(from, to, nodes);
+             }
+             modified = true;
+           }
+           
+           return modified ? tr : null;
+        }
+      }),
+      new Plugin({
         props: {
           transformPastedText(text) {
             // Clean invisible characters that break KaTeX
             text = text.replace(/[\uFFFC\u200B]/g, "");
-            
-            text = text.replace(/\\\[((?:.|[\r\n])*?)\\\]/g, "$$$$$1$$$$");
-            text = text.replace(/\\\(((?:.|[\r\n])*?)\\\)/g, "$$$1$$");
             return text;
           },
           transformPastedHTML(html) {
-            // Clean invisible characters that break KaTeX
-            html = html.replace(/[\uFFFC\u200B]/g, "");
-            
-            // Replace in HTML content. 
-            // Warning: This is a naive replacement. It might affect attributes, but for GPT paste it's usually fine.
-            html = html.replace(/\\\[((?:.|[\r\n])*?)\\\]/g, "$$$$$1$$$$");
-            html = html.replace(/\\\(((?:.|[\r\n])*?)\\\)/g, "$$$1$$");
-            return html;
+             html = html.replace(/[\uFFFC\u200B]/g, "");
+             return html;
           },
         },
       }),
@@ -318,5 +372,68 @@ export const Mathematics = Node.create<MathematicsOptions>({
 
   addNodeView() {
     return ReactNodeViewRenderer(MathNodeView);
+  },
+
+  onCreate() {
+    const { state, view } = this.editor;
+    const tr = state.tr;
+    let modified = false;
+    const replacements: { from: number; to: number; nodes: any[] }[] = [];
+
+    // Initial hydration scan
+    state.doc.descendants((node, pos, parent) => {
+        if (node.type.name !== "text" || !node.text) return;
+        // Skip code blocks - do not hydrate LaTeX inside code
+        if (parent && parent.type.name === "codeBlock") return;
+        
+        const text = node.text;
+        // Create a fresh regex for each text node to avoid lastIndex issues
+        const latexRegex = /\\\[((?:.|[\r\n])*?)\\\]|\$\$([\s\S]+?)\$\$|\\\(((?:.|[\r\n])*?)\\\)|\$([^$\n]+?)\$/g;
+
+        const nodes: any[] = [];
+        let lastIndex = 0;
+        let hasMatch = false;
+
+        let match;
+        while ((match = latexRegex.exec(text)) !== null) {
+            hasMatch = true;
+            if (match.index > lastIndex) {
+                nodes.push(state.schema.text(text.slice(lastIndex, match.index)));
+            }
+
+            const latex = (match[1] || match[2] || match[3] || match[4] || "").trim();
+            const displayMode = !!(match[1] || match[2]);
+
+            if (latex) {
+                const mathNode = state.schema.nodes.math?.create({ latex, displayMode });
+                if (mathNode) nodes.push(mathNode);
+                else nodes.push(state.schema.text(match[0]));
+            }
+
+            lastIndex = latexRegex.lastIndex;
+        }
+
+        if (!hasMatch) return;
+
+        if (lastIndex < text.length) {
+            nodes.push(state.schema.text(text.slice(lastIndex)));
+        }
+
+        if (nodes.length > 0) {
+            replacements.push({ from: pos, to: pos + node.nodeSize, nodes });
+        }
+    });
+
+    if (replacements.length > 0) {
+        for (let i = replacements.length - 1; i >= 0; i--) {
+            const { from, to, nodes } = replacements[i];
+            tr.replaceWith(from, to, nodes);
+        }
+        modified = true;
+    }
+
+    if (modified) {
+        view.dispatch(tr);
+    }
   },
 });
