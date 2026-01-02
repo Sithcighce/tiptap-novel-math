@@ -59,11 +59,113 @@
 /* Math Node Wrapper */
 .tnm-math-wrapper {
   display: inline-block;
+  max-width: 100%;
+}
+
+/* 行内公式也需要支持滚动 */
+.tnm-math-wrapper--inline {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
 .tnm-math-wrapper--block {
+  display: block;
   width: 100%;
   text-align: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  /* 添加滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  /* 添加一些 padding 使滚动更舒适 */
+  padding: 0.5rem 0;
+}
+
+.tnm-math-content {
+  display: inline-block;
+  min-width: max-content; /* 让公式按照自身宽度展开，配合父容器滚动 */
+}
+
+/* 确保 KaTeX 渲染的公式不换行且不产生额外滚动条 */
+.tnm-math-wrapper .katex-display {
+  margin: 0;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.tnm-math-wrapper .katex-display > .katex {
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+/* 移除 KaTeX 自带的滚动条 */
+.tnm-math-wrapper .katex-html {
+  overflow: visible;
+}
+
+.tnm-math-wrapper .katex {
+  white-space: nowrap;
+}
+
+/* Webkit 浏览器滚动条样式 */
+.tnm-math-wrapper--block::-webkit-scrollbar,
+.tnm-math-wrapper--inline::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tnm-math-wrapper--block::-webkit-scrollbar-track,
+.tnm-math-wrapper--inline::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tnm-math-wrapper--block::-webkit-scrollbar-thumb,
+.tnm-math-wrapper--inline::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.tnm-math-wrapper--block::-webkit-scrollbar-thumb:hover,
+.tnm-math-wrapper--inline::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 深色模式滚动条 */
+@media (prefers-color-scheme: dark) {
+  .tnm-math-wrapper--block,
+  .tnm-math-wrapper--inline {
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+  
+  .tnm-math-wrapper--block::-webkit-scrollbar-thumb,
+  .tnm-math-wrapper--inline::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .tnm-math-wrapper--block::-webkit-scrollbar-thumb:hover,
+  .tnm-math-wrapper--inline::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.dark .tnm-math-wrapper--block,
+.dark .tnm-math-wrapper--inline {
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.dark .tnm-math-wrapper--block::-webkit-scrollbar-thumb,
+.dark .tnm-math-wrapper--inline::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .tnm-math-wrapper--block::-webkit-scrollbar-thumb:hover,
+.dark .tnm-math-wrapper--inline::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Math Trigger */

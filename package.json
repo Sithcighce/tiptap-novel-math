@@ -20,7 +20,8 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles.css": "./src/styles.css"
+    "./styles.css": "./src/styles.css",
+    "./dist/styles.css": "./dist/styles.css"
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm && node -e \"require('fs').copyFileSync('src/styles.css', 'dist/styles.css')\"",
@@ -68,6 +69,8 @@
     "@radix-ui/react-popover": "^1.0.7",
     "clsx": "^2.0.0",
     "katex": "^0.16.9",
+    "markdown-it": "^14.1.0",
+    "markdown-it-texmath": "^1.0.0",
     "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
@@ -82,6 +85,7 @@
     "@types/react-dom": "^19",
     "jsdom": "^27.4.0",
     "lucide-react": "^0.562.0",
+    "tiptap-markdown": "^0.8.10",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",
     "vitest": "^4.0.14"

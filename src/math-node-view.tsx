@@ -63,14 +63,21 @@ export const MathNodeView = ({ node, updateAttributes, deleteNode, editor }: Nod
   const isSelected = editor.isActive("math");
 
   return (
-    <NodeViewWrapper as="span" className={cn("inline-block", displayMode && "w-full text-center")}>
+    <NodeViewWrapper 
+      as="span" 
+      className={cn(
+        "tnm-math-wrapper",
+        displayMode ? "tnm-math-wrapper--block" : "tnm-math-wrapper--inline"
+      )}
+    >
       <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger asChild>
           <span
             className={cn(
               "cursor-pointer rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-800",
               !node.attrs.latex && "bg-slate-100 dark:bg-slate-800 text-slate-500 px-2 py-1 inline-flex items-center gap-1",
-              isSelected && "ring-2 ring-black dark:ring-white ring-offset-1"
+              isSelected && "ring-2 ring-black dark:ring-white ring-offset-1",
+              displayMode && "inline-block"
             )}
             onClick={() => setIsOpen(true)}
           >
@@ -81,6 +88,7 @@ export const MathNodeView = ({ node, updateAttributes, deleteNode, editor }: Nod
               </>
             ) : (
               <span
+                className={cn("tnm-math-content", displayMode && "inline-block")}
                 dangerouslySetInnerHTML={{
                   __html: renderMath(node.attrs.latex, node.attrs.displayMode),
                 }}

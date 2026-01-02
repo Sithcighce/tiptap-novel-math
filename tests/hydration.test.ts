@@ -87,10 +87,9 @@ describe('Mathematics Hydration', () => {
     })
     
     // The storage is mounted at editor.storage.math
-    // Inside it, we expect our 'mathMarkdown' property (formerly 'markdown')
+    // Inside it, we expect our 'markdown' property for tiptap-markdown compatibility
     expect(editor.storage.math).toBeDefined()
-    expect(editor.storage.math.mathMarkdown).toBeDefined()
-    // Ensure we don't have a 'markdown' property inside math storage anymore
-    expect(editor.storage.math.markdown).toBeUndefined()
+    expect(editor.storage.math.markdown).toBeDefined()
+    expect(editor.storage.math.markdown.serialize).toBeDefined()
   })
 })
